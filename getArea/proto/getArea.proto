@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package getArea;
+
+option go_package = "./proto;getArea";
+
+service GetArea {
+	rpc Call(CallRequest) returns (CallResponse) {}
+}
+
+message CallRequest {
+	string name = 1;
+}
+
+message CallResponse {
+	//返回错误码
+	string Errno = 1;
+	//返回错误信息
+	string Errmsg = 2;
+	//返回数据类型
+	message Address{
+		int32 aid = 1;
+		string aname = 2;
+	}
+	//用自定义类型返回的数组
+	repeated Address Data = 3;
+}

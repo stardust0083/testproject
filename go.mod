@@ -3,9 +3,12 @@ module testproject
 go 1.17
 
 require (
-	github.com/asim/go-micro/plugins/registry/consul/v4 v4.0.0-20220325022819-73eda3346d18
+	github.com/asim/go-micro/plugins/registry/consul/v4 v4.0.0-20220401061051-1f086a300299
+	github.com/asim/go-micro/plugins/transport/grpc/v4 v4.0.0-20220410141239-1919048c8f20
+	github.com/gin-gonic/gin v1.7.7
+	github.com/gomodule/redigo v1.8.8
 	github.com/jinzhu/gorm v1.9.16
-	go-micro.dev/v4 v4.2.1
+	go-micro.dev/v4 v4.6.0
 )
 
 require (
@@ -25,6 +28,7 @@ require (
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/hashicorp/consul/api v1.9.0 // indirect
@@ -36,6 +40,7 @@ require (
 	github.com/hashicorp/serf v0.9.5 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
@@ -68,12 +73,4 @@ require (
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-)
-
-require (
-	github.com/asim/go-micro/plugins/transport/grpc/v4 v4.0.0-20220401061051-1f086a300299
-	github.com/gin-gonic/gin v1.7.7
-	github.com/go-sql-driver/mysql v1.5.0 // indirect
-	github.com/gomodule/redigo v1.8.8
-	github.com/jinzhu/inflection v1.0.0 // indirect
 )

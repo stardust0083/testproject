@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	getArea "getArea"
+	proto1 "getArea/proto"
 
 	"github.com/asim/go-micro/plugins/registry/consul/v4"
 	"github.com/asim/go-micro/plugins/transport/grpc/v4"
@@ -24,9 +25,9 @@ func GetArea(ctx *gin.Context) {
 		micro.Transport(ser),
 	)
 
-	microClient := getArea.NewGetAreaService("go.micro.srv.getArea", micService.Client())
+	microClient := proto1.NewGetAreaService("go.micro.srv.getArea", micService.Client())
 	//调用远程服务
-	resp, err := microClient.MicroGetArea(context.TODO(), &getArea.Request{})
+	resp, err := microClient.Call(context.TODO(), &getArea.Request{})
 	if err != nil {
 		fmt.Println(err)
 		/*ctx.JSON(http.StatusOK,resp)

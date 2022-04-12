@@ -76,8 +76,6 @@ github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5 h1:0CwZNZbxp69SHPd
 github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5/go.mod h1:wHh0iHkYZB8zMSxRWpUBQtwG5a7fFgvEO+odwuTv2gs=
 github.com/asim/go-micro/plugins/registry/consul/v4 v4.0.0-20220401061051-1f086a300299 h1:fQqPgymkNzZtcmRJM1vwrugS5df9fgPN+u1NeOR2png=
 github.com/asim/go-micro/plugins/registry/consul/v4 v4.0.0-20220401061051-1f086a300299/go.mod h1:cCagHmMVGVea+8gzr0AC+yXtwtCIB6iXh20ipF9coOA=
-github.com/asim/go-micro/plugins/transport/grpc/v4 v4.0.0-20220401061051-1f086a300299 h1:r2fbIeV+hlXMJKkY/gCv4KkGW9yCXHQKwecA5Q5DIog=
-github.com/asim/go-micro/plugins/transport/grpc/v4 v4.0.0-20220401061051-1f086a300299/go.mod h1:1QMdIH+yMG6hhtCpCCknOl7tURk+5jA3I4S0+LqCTIE=
 github.com/asim/go-micro/plugins/transport/grpc/v4 v4.0.0-20220410141239-1919048c8f20 h1:IunNklOStwUE2O0lKIZwEsk8NijtQtcdKlXWE5PX26Q=
 github.com/asim/go-micro/plugins/transport/grpc/v4 v4.0.0-20220410141239-1919048c8f20/go.mod h1:1QMdIH+yMG6hhtCpCCknOl7tURk+5jA3I4S0+LqCTIE=
 github.com/aws/aws-sdk-go v1.37.27/go.mod h1:hcU610XS61/+aQV88ixoOzUoG7v3b31pl2zKMmprdro=

@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"testproject/mainproject/utils"
+	"mainproject/utils"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/jinzhu/gorm"

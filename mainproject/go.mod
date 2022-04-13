@@ -1,4 +1,4 @@
-module testproject
+module mainproject
 
 go 1.17
 

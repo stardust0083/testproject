@@ -3,9 +3,6 @@ package models
 import (
 	"time"
 
-	"mainproject/utils"
-
-	"github.com/gomodule/redigo/redis"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -103,28 +100,4 @@ func GetAllArea(db *gorm.DB) ([]Area, error) {
 		return nil, err
 	}
 	return areas, nil
-}
-
-var RedisClient *redis.Pool
-
-func InitRedis() {
-	RedisClient = &redis.Pool{
-		//设置redis连接池最大空闲链接数
-		MaxIdle: utils.G_redis_maxidel,
-		//设置redis连接池最大同时链接数
-		MaxActive: utils.G_redis_maxactive,
-		//设置redis连接池最大空闲时间
-		IdleTimeout: utils.G_redis_idletimeout,
-		//连接redis
-		Dial: func() (redis.Conn, error) {
-			conn, err := redis.Dial("tcp", utils.G_redis_addr+utils.G_redis_port)
-			if err != nil {
-
-				return nil, err
-			}
-			//设置选中哪个数据库
-			//conn.Do("select", utils.G_redis_db)
-			return conn, nil
-		},
-	}
 }

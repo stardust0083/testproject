@@ -19,16 +19,18 @@ func GetArea(ctx *gin.Context) {
 		options.Addrs = []string{"127.0.0.1:8500"}
 	})
 	ser := grpc.NewTransport()
-	micService := micro.NewService(
+	microService := micro.NewService(
 		micro.Registry(reg),
 		micro.Transport(ser),
 	)
 
-	microClient := GETAREA.NewGetAreaService("go.micro.srv.getArea", micService.Client())
+	microClient := GETAREA.NewGetAreaService("go.micro.srv.getArea", microService.Client())
 	//调用远程服务
 	resp, err := microClient.Call(context.TODO(), &GETAREA.CallRequest{})
 	if err != nil {
 		fmt.Println(err)
+		http.Error(w, err.Error(), 502)
+		return
 		/*ctx.JSON(http.StatusOK,resp)
 		return */
 	}

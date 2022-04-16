@@ -1,23 +1,28 @@
 package utils
 
 import (
+	"time"
+
 	"github.com/beego/beego/v2/core/config"
 	"github.com/beego/beego/v2/core/logs"
 	//使用了beego框架的配置文件读取模块
 )
 
 var (
-	G_server_name  string //项目名称
-	G_server_addr  string //服务器ip地址
-	G_server_port  string //服务器端口
-	G_redis_addr   string //redis ip地址
-	G_redis_port   string //redis port端口
-	G_redis_dbnum  string //redis db 编号
-	G_mysql_addr   string //mysql ip 地址
-	G_mysql_port   string //mysql 端口
-	G_mysql_dbname string //mysql db name
-	G_fastdfs_port string //fastdfs 端口
-	G_fastdfs_addr string //fastdfs ip
+	G_server_name       string //项目名称
+	G_server_addr       string //服务器ip地址
+	G_server_port       string //服务器端口
+	G_redis_addr        string //redis ip地址
+	G_redis_port        string //redis port端口
+	G_redis_dbnum       string //redis db 编号
+	G_mysql_addr        string //mysql ip 地址
+	G_mysql_port        string //mysql 端口
+	G_mysql_dbname      string //mysql db name
+	G_fastdfs_port      string //fastdfs 端口
+	G_fastdfs_addr      string //fastdfs ip
+	G_redis_maxidel     int
+	G_redis_maxactive   int
+	G_redis_idletimeout time.Duration
 )
 
 func InitConfig() {
@@ -38,6 +43,9 @@ func InitConfig() {
 	G_mysql_dbname, _ = appconf.String("mysqldbname")
 	G_fastdfs_port, _ = appconf.String("fastdfsport")
 	G_fastdfs_addr, _ = appconf.String("fastdfsaddr")
+	G_redis_maxidel = 10
+	G_redis_maxactive = 0
+	G_redis_idletimeout = time.Duration(1000)
 	return
 }
 

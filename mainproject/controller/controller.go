@@ -2,40 +2,32 @@ package controller
 
 import (
 	"context"
-	"fmt"
-	"net/http"
-
-	GETAREA "getArea/proto"
+	GETAREA "getArea"
+	GETAREAPB "getArea/proto"
+	"mainproject/utils"
 
 	"github.com/asim/go-micro/plugins/registry/consul/v4"
 	"github.com/asim/go-micro/plugins/transport/grpc/v4"
 	"github.com/gin-gonic/gin"
 	"go-micro.dev/v4"
-	"go-micro.dev/v4/registry"
 )
 
 func GetArea(ctx *gin.Context) {
-	reg := consul.NewRegistry(func(options *registry.Options) {
-		options.Addrs = []string{"127.0.0.1:8500"}
-	})
+	reg := consul.NewRegistry()
 	ser := grpc.NewTransport()
 	microService := micro.NewService(
 		micro.Registry(reg),
 		micro.Transport(ser),
+		micro.Name(GETAREA.Service),
+		micro.Version(GETAREA.Version),
 	)
-
-	microClient := GETAREA.NewGetAreaService("go.micro.srv.getArea", microService.Client())
-	//调用远程服务
-	resp, err := microClient.Call(context.TODO(), &GETAREA.CallRequest{})
+	microService.Init()
+	client := GETAREAPB.NewGetAreaService(GETAREA.Service, microService.Client())
+	rsp, err := client.Call(context.Background(), &GETAREAPB.CallRequest{})
 	if err != nil {
-		fmt.Println(err)
-		http.Error(w, err.Error(), 502)
-		return
-		/*ctx.JSON(http.StatusOK,resp)
-		return */
+
+		rsp.Errno = utils.RECODE_DATAERR
+		rsp.Errmsg = utils.RecodeText(utils.RECODE_DATAERR)
 	}
-
-	//把int 的0值  json的特性,如果字段是零值,不对这个字段做序列化
-
-	ctx.JSON(http.StatusOK, resp)
+	ctx.JSON(200, rsp)
 }

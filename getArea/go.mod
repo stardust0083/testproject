@@ -5,7 +5,10 @@ go 1.16
 require (
 	github.com/Microsoft/go-winio v0.5.2 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20220113124808-70ae35bab23f // indirect
+	github.com/asim/go-micro/plugins/registry/consul/v4 v4.0.0-20220415015530-034ba9a0dead
+	github.com/asim/go-micro/plugins/transport/grpc/v4 v4.0.0-20220415015530-034ba9a0dead
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
+	github.com/garyburd/redigo v1.6.3
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/miekg/dns v1.1.48 // indirect

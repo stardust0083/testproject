@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"github.com/garyburd/redigo/redis"
 	log "go-micro.dev/v4/logger"
@@ -28,23 +29,22 @@ func (e *GetArea) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallRes
 	redisClient := models.InitRedis().Get()
 	defer redisClient.Close()
 	areaResp, err := redis.Bytes(redisClient.Do("get", "areas"))
-	if err != nil {
-		log.Infof("Read Redis Failed")
-		rsp.Errno = utils.RECODE_DBERR
-		rsp.Errmsg = utils.RecodeText(rsp.Errno)
-		return nil
-	}
+	log.Infof("Read Redis")
 	var areas []models.Area
-	if len(areaResp) == 0 {
+	if err != nil || len(areaResp) == 0 {
+		log.Infof("Read SQL")
 		//第一次从mysql中获取数据 调用封装的函数
 		mysqlClient, _ := models.InitDb()
+		log.Infof("Init SQL")
 		areas, err = models.GetAllArea(mysqlClient)
+		log.Infof("Read SQL Area")
 		if err != nil {
 			rsp.Errno = utils.RECODE_DBERR
 			rsp.Errmsg = utils.RecodeText(utils.RECODE_DBERR)
 			return err
 		}
 		//对areas数据编码
+		log.Infof(fmt.Sprint(areas))
 		areaBytes, err := json.Marshal(areas)
 		if err != nil {
 			rsp.Errno = utils.RECODE_DATAERR
@@ -60,6 +60,7 @@ func (e *GetArea) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallRes
 			return err
 		}
 	} else {
+		print(areaResp)
 		err = json.Unmarshal(areaResp, &areas)
 		if err != nil {
 			rsp.Errno = utils.RECODE_DATAERR

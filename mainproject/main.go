@@ -9,7 +9,7 @@ import (
 func main() {
 	//初始化路由
 	router := gin.Default()
-
+	
 	//映射静态资源
 	router.Static("/home", "mainproject/view")
 

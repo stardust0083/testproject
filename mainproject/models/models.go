@@ -83,16 +83,20 @@ type OrderHouse struct {
 
 func InitDb() (*gorm.DB, error) {
 	//sql.Open()
-	db, err := gorm.Open("mysql", "root:246810@tcp(127.0.0.1:3306)/test?charset=utf8")
-	defer db.Close()
+	dsn := "hsf:cyl20000828@(127.0.0.1:3306)/testproject?charset=utf8"
+	db, err := gorm.Open("mysql", dsn)
 	if err == nil {
 		db.SingularTable(true)
 		db.AutoMigrate(new(User), new(House), new(Area), new(Facility), new(HouseImage), new(OrderHouse))
-		/*db.DB().SetMaxIdleConns(10)
-		db.DB().SetConnMaxLifetime(100)*/
+		// db.DB().SetMaxIdleConns(10)
+		// db.DB().SetConnMaxLifetime(100)
 		return db, nil
 	}
 	return nil, err
+}
+
+func CloseDb(db *gorm.DB) {
+	db.DB().Close()
 }
 
 func GetAllArea(db *gorm.DB) ([]Area, error) {

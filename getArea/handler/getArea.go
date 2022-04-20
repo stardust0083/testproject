@@ -59,6 +59,7 @@ func (e *GetArea) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallRes
 			rsp.Errmsg = utils.RecodeText(utils.RECODE_DATAERR)
 			return err
 		}
+		models.CloseDb(mysqlClient)
 	} else {
 		print(areaResp)
 		err = json.Unmarshal(areaResp, &areas)

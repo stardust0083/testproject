@@ -1,11 +1,14 @@
 package main
 
 import (
+	"image/color"
+	"image/png"
+	"net/http"
 	"time"
 
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-
+	"github.com/afocus/captcha"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 /* 用户 table_name = user */
@@ -81,26 +84,43 @@ type OrderHouse struct {
 }
 
 func main() {
-	dsn := "hsf:cyl20000828@(127.0.0.1:3306)/testproject?charset=utf8"
-	db, err := gorm.Open("mysql", dsn)
-	if err != nil {
-		print(err.Error())
-		panic("连接mysql失败")
+	cap := captcha.New()
+
+	if err := cap.SetFont("./Delttras.ttf"); err != nil {
+		panic(err.Error())
 	}
-	defer db.DB().Close()
-	//sqlDB, err := db.DB()
-	//defer sqlDB.Close()
-	if err == nil {
-		db.SingularTable(true)
-		db.AutoMigrate(new(User), new(House), new(Area), new(Facility), new(HouseImage), new(OrderHouse))
-		/*db.DB().SetMaxIdleConns(10)
-		db.DB().SetConnMaxLifetime(100)*/
-		var areas []Area
-		areas, _ = GetAllArea(db)
-		for _, i := range areas {
-			print(i.Id, i.Name, i.Houses)
-		}
-	}
+
+	/*
+	   //We can load font not only from localfile, but also from any []byte slice
+	   	fontContenrs, err := ioutil.ReadFile("comic.ttf")
+	   	if err != nil {
+	   		panic(err.Error())
+	   	}
+
+	   	err = cap.AddFontFromBytes(fontContenrs)
+	   	if err != nil {
+	   		panic(err.Error())
+	   	}
+	*/
+
+	cap.SetSize(128, 64)
+	cap.SetDisturbance(captcha.MEDIUM)
+	cap.SetFrontColor(color.RGBA{255, 255, 255, 255})
+	cap.SetBkgColor(color.RGBA{255, 0, 0, 255}, color.RGBA{0, 0, 255, 255}, color.RGBA{0, 153, 0, 255})
+
+	http.HandleFunc("/r", func(w http.ResponseWriter, r *http.Request) {
+		img, str := cap.Create(6, captcha.ALL)
+		png.Encode(w, img)
+		println(str)
+	})
+
+	http.HandleFunc("/c", func(w http.ResponseWriter, r *http.Request) {
+		str := r.URL.RawQuery
+		img := cap.CreateCustom(str)
+		png.Encode(w, img)
+	})
+
+	http.ListenAndServe(":8086", nil)
 }
 func GetAllArea(db *gorm.DB) ([]Area, error) {
 	var areas []Area

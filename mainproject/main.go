@@ -9,7 +9,7 @@ import (
 func main() {
 	//初始化路由
 	router := gin.Default()
-	
+
 	//映射静态资源
 	router.Static("/home", "mainproject/view")
 
@@ -17,6 +17,8 @@ func main() {
 	{
 		r1.GET("/areas", controller.GetArea)
 		r1.GET("/test", controller.Test)
+		r1.GET("/session", controller.GetSession)
+		r1.GET("/imagecode/:uuid",controller.GetImageCode)
 	}
 
 	//开启监听

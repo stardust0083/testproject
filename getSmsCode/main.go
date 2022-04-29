@@ -1,8 +1,8 @@
 package main
 
 import (
-	"getImageCode/handler"
-	pb "getImageCode/proto"
+	"getSmsCode/handler"
+	pb "getSmsCode/proto"
 
 	"github.com/asim/go-micro/plugins/registry/consul/v4"
 	"github.com/asim/go-micro/plugins/transport/grpc/v4"
@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	Service = "go.micro.srv.GetImageCode"
-	Version = "latest"
+	service = "go.micro.srv.GetSmsCode"
+	version = "latest"
 )
 
 func main() {
@@ -21,11 +21,13 @@ func main() {
 	srv := micro.NewService(
 		micro.Registry(reg),
 		micro.Transport(ser),
-		micro.Name(Service),
-		micro.Version(Version),
+		micro.Name(service),
+		micro.Version(version),
 	)
+	srv.Init()
+
 	// Register handler
-	pb.RegisterGetImageCodeHandler(srv.Server(), new(handler.GetImageCode))
+	pb.RegisterGetSmsCodeHandler(srv.Server(), new(handler.GetSmsCode))
 
 	// Run service
 	if err := srv.Run(); err != nil {

@@ -21,6 +21,7 @@ func (e *GetImageCode) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.Ca
 
 	//设置字体库
 	if err := cap.SetFont("Delttras.ttf"); err != nil {
+		log.Infof("Read Font Error")
 		panic(err.Error())
 	}
 

@@ -38,6 +38,7 @@ func (e *GetSmsCode) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.Call
 	redisCli := models.InitRedis().Get()
 	defer redisCli.Close()
 	capCode, err := redis.String(redisCli.Do("get", req.Uuid))
+	log.Infof(capCode)
 	if err != nil {
 		log.Infof("Captcha Not Found")
 		rsp.Errno = utils.RECODE_DATAERR
@@ -53,7 +54,7 @@ func (e *GetSmsCode) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.Call
 
 	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
 	vcode := fmt.Sprintf("%06d", rnd.Int31n(1000000))
-	redisCli.Do("setex",req.Phone+"_code",60 * 5,vcode)
+	redisCli.Do("setex", req.Phone+"_code", 60*5, vcode)
 	return nil
 }
 

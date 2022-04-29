@@ -3,7 +3,8 @@ go 1.18
 use (
 	./getArea
 	./mainproject
-	./getSession
 	./getImageCode
 	./getSmsCode
+	./postRet
+	./getUserInfo
 )

@@ -80,6 +80,11 @@ type OrderHouse struct {
 	Comment     string    `gorm:"size:512"`              //订单评论
 	Credit      bool      //表示个人征信情况 true表示良好
 }
+type RegisterUser struct {
+	Mobile   string `json:"mobile"`
+	Password string `json:"password"`
+	SmsCode  string `json:"sms_code"`
+}
 
 func InitDb() (*gorm.DB, error) {
 	//sql.Open()

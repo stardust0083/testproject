@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package getUserInfo;
+
+option go_package = "./proto;getUserInfo";
+
+service GetUserInfo {
+	rpc Call(CallRequest) returns (CallResponse) {}
+	rpc ClientStream(stream ClientStreamRequest) returns (ClientStreamResponse) {}
+	rpc ServerStream(ServerStreamRequest) returns (stream ServerStreamResponse) {}
+	rpc BidiStream(stream BidiStreamRequest) returns (stream BidiStreamResponse) {}
+}
+
+message CallRequest {
+	string name = 1;
+}
+
+message CallResponse {
+	string errno = 1;
+	string errmsg = 2;
+	UserData data = 3;
+}
+
+message ClientStreamRequest {
+	int64 stroke = 1;
+}
+
+message ClientStreamResponse {
+	int64 count = 1;
+}
+
+message ServerStreamRequest {
+	int64 count = 1;
+}
+message UserData{
+	int32 user_id = 1;
+	string name = 2;
+	string mobile = 3;
+	string real_name = 4;
+	string id_card = 5;
+	string avatar_url = 6;
+}
+
+message ServerStreamResponse {
+	int64 count = 1;
+}
+
+message BidiStreamRequest {
+	int64 stroke = 1;
+}
+
+message BidiStreamResponse {
+	int64 stroke = 1;
+}
